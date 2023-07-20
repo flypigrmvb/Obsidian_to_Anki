@@ -167,7 +167,9 @@ export default class MyPlugin extends Plugin {
 		}
 		new Notice("Successfully connected to Anki! This could take a few minutes - please don't close Anki until the plugin is finished")
 		const data: ParsedSettings = await settingToData(this.app, this.settings, this.fields_dict)
-		const manager = new FileManager(this.app, data, this.app.vault.getMarkdownFiles(), this.file_hashes, this.added_media)
+		const activeFile = this.app.workspace.getActiveFile()
+		const allFiles = this.app.vault.getMarkdownFiles()
+		const manager = new FileManager(this.app, data, [activeFile], this.file_hashes, this.added_media)
 		await manager.initialiseFiles()
 		await manager.requests_1()
 		this.added_media = Array.from(manager.added_media_set)
