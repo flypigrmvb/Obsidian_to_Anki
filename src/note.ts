@@ -275,11 +275,12 @@ export class RegexNote {
 			fields[this.field_names[index]] = this.match.slice(1)[index] ? this.match.slice(1)[index] : ""
 		}
 		for (let key in fields) {
-            fields[key] = this.formatter.format(
+            let fieldVal = this.formatter.format(
                 fields[key].trim(),
-                this.note_type.includes("Cloze") && this.curly_cloze,
+                (this.note_type.includes("Cloze") || this.note_type.includes("填空")) && this.curly_cloze,
 				this.highlights_to_cloze
             ).trim()
+            fields[key] = fieldVal
         }
         return fields
 	}
